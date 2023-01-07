@@ -14,12 +14,11 @@ WORKDIR /build/target/
 RUN mkdir temp \
     && ls -ll \
     && unzip -q app.jar -d temp \
-    && export DEP_LIST=$(jdeps -cp 'temp/BOOT-INF/classes:temp:temp/BOOT-INF/lib/*' \
+    && export DEP_LIST=$(jdeps -cp 'temp/BOOT-INF/lib/*' \
     --print-module-deps\
     --ignore-missing-deps \
     --recursive \
     --multi-release 17 \
-    --module-path="temp/BOOT-INF/lib/*" \
     app.jar) \
     && jlink --add-modules $DEP_LIST --compress 2 --no-man-pages --no-header-files  --output jre \
     && rm -fr temp
